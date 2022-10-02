@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField]
     private float movementSpeed;
+    public float SpeedMultiplier { get; set; } = 1f;
     private Vector2 _movement;
     private Rigidbody2D _rb;
     // Start is called before the first frame update
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public void Movement()
     {
         Vector2 currentPos = _rb.position;
-        Vector2 adjustedMovement = _movement * movementSpeed;
+        Vector2 adjustedMovement = _movement * (movementSpeed * SpeedMultiplier);
         Vector2 newPos = currentPos + adjustedMovement * Time.fixedDeltaTime;
         _rb.MovePosition(newPos);
     }
