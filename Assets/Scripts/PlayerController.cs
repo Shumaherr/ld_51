@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float movementSpeed;
     public float SpeedMultiplier { get; set; } = 1f;
+    public int ControlInverter { get; set; } = 1;
     private Vector2 _movement;
     private Rigidbody2D _rb;
     // Start is called before the first frame update
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
     
     void OnMove(InputValue value)
     {
-        _movement = value.Get<Vector2>();
+        _movement = value.Get<Vector2>() * ControlInverter;
     }
     
     public void Movement()

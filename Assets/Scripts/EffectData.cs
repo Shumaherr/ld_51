@@ -12,4 +12,5 @@ public class EffectData : ScriptableObject
     public float value;
     
     public Sprite icon;
+
 }

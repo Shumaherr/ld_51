@@ -6,7 +6,7 @@ public abstract class Buff
 {
     public EffectData EffectData;
     private bool _isActive;
-
+    
     public bool IsActive
     {
         get => _isActive;

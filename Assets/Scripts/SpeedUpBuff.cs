@@ -6,6 +6,11 @@ public class SpeedUpBuff : Buff
 {
     private float _defaultSpeedMultiplier;
 
+    public SpeedUpBuff()
+    {
+        EffectData = Resources.Load("SpeedUpItem.asset") as EffectData;
+    }
+
     public override void ApplyEffect(GameObject gameObject)
     {
         IsActive = true;
