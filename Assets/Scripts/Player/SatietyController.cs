@@ -5,15 +5,16 @@ using UnityEngine;
 public class SatietyController : MonoBehaviour
 {
     private int _satiety;
-
+    private bool _isActive;
     public int Satiety
     {
         get => _satiety;
         set
         {
-            if (value <= 0)
+            if (value <= 0 && _isActive)
             {
                 _satiety = 0;
+                _isActive = false;
                 EventManager.TriggerEvent("gameOver", null);
             }
 
@@ -28,7 +29,8 @@ public class SatietyController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        _satiety = _maxSatiety;
+        Satiety = _maxSatiety;
+        _isActive = true;
         InvokeRepeating("DecreaseSatiety", 0, 1);
     }
 

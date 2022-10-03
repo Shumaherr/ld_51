@@ -1,4 +1,5 @@
 ﻿using System;
+using Cinemachine;
 using UnityEngine;
 
 
@@ -7,6 +8,7 @@ public class Game : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform levelBuilder;
     [SerializeField] private Vector2 playerSpawnPoint;
+    [SerializeField] CinemachineVirtualCamera  vcam;
     
     private LevelGenerator _levelGenerator;
     private Transform _player;
@@ -20,12 +22,19 @@ public class Game : MonoBehaviour
         
         _levelGenerator.GenerateMap();
         playerSpawnPoint = _levelGenerator.EntryPosition;
-        _player = Instantiate(playerPrefab, playerSpawnPoint, Quaternion.identity).transform;
+        InitScene();
     }
 
-    void RestartLevel()
+    public void RestartLevel()
     {
-        Destroy(_player.gameObject);
+        InitScene();
+    }
+
+    private void InitScene()
+    {
+        if(_player!=null)
+            Destroy(_player.gameObject);
         _player = Instantiate(playerPrefab, playerSpawnPoint, Quaternion.identity).transform;
+        vcam.Follow = _player;
     }
 }
