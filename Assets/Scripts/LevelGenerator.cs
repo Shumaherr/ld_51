@@ -40,7 +40,7 @@ public class LevelGenerator : MonoBehaviour
         _templates.transform.position = new Vector2(-gridW / 2 + tileSize / 2, gridH / 2 - tileSize / 2);
 
         var generator = new PerlinMapGenerator();
-        var map = generator.GenerateMap(width, height, 0, 5);
+        var map = generator.GenerateMap(width, height, 0, 5, 3);
 
         for (int i = 0; i < width; i++)
         {
@@ -55,8 +55,24 @@ public class LevelGenerator : MonoBehaviour
                         Instantiate(_templates.bushTiles[_rand.Next(_templates.bushTiles.Length)],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
-                    case CellTypes.Food:
-                        Instantiate(_templates.foodTiles[_rand.Next(_templates.foodTiles.Length)],
+                    case CellTypes.SlowerFood:
+                        Instantiate(_templates.foodTiles[0],
+                            new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
+                        break;
+                    case CellTypes.FasterFood:
+                        Instantiate(_templates.foodTiles[1],
+                            new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
+                        break;
+                    case CellTypes.EnlargerFood:
+                        Instantiate(_templates.foodTiles[2],
+                            new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
+                        break;
+                    case CellTypes.InverterFood:
+                        Instantiate(_templates.foodTiles[3],
+                            new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
+                        break;
+                    case CellTypes.InvisibleFood:
+                        Instantiate(_templates.foodTiles[4],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
                 }

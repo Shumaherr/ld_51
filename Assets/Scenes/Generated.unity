@@ -212,6 +212,10 @@ MonoBehaviour:
   - {fileID: 8915896414099385336, guid: 29bec2c9c275fd94b8cf2438d51a0d57, type: 3}
   foodTiles:
   - {fileID: 505898254253071054, guid: 6aed11d40a5385b419be5e30ae10195f, type: 3}
+  - {fileID: 7672886879137560329, guid: f7fde1c8d0889ea4787a57a9508fbe67, type: 3}
+  - {fileID: 5116890765170846589, guid: 791ce5548069c2c4dadb385856e32887, type: 3}
+  - {fileID: 2173257167712387660, guid: 30f232ca45ff63c4390e3a0bbc369d7a, type: 3}
+  - {fileID: 8034442345271232406, guid: c979fd3e7c8bd07498d97e67326952ab, type: 3}
 --- !u!4 &1212130275
 Transform:
   m_ObjectHideFlags: 0
