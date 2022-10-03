@@ -8,7 +8,16 @@ internal class PerlinMapGenerator
 {
     private readonly Random _random = new Random();
 
-    public CellTypes[,] GenerateMap(int width, int height, int entryX, int entryY)
+    private readonly Dictionary<CellTypes, int> _distances = new Dictionary<CellTypes, int>
+    {
+        { CellTypes.InverterFood, 10 },
+        { CellTypes.InvisibleFood, 10 },
+        { CellTypes.SlowerFood, 5 },
+        { CellTypes.FasterFood, 20 },
+        { CellTypes.EnlargerFood, 10 },
+    };
+
+    public CellTypes[,] GenerateMap(int width, int height, int entryX, int entryY, int tolerance)
     {
         var result = new CellTypes[width, height];
 
@@ -55,7 +64,7 @@ internal class PerlinMapGenerator
 
                 result[exitCoords.Item1, exitCoords.Item2] = CellTypes.Exit;
 
-                PlaceFood(result, distanceMap, exitCoords);
+                PlaceFood(result, distanceMap, exitCoords, tolerance);
 
                 generated = true;
             }
@@ -68,7 +77,7 @@ internal class PerlinMapGenerator
         return result;
     }
 
-    private void PlaceFood(CellTypes[,] map, int[,] distanceMap, Tuple<int, int> exitCoords)
+    private void PlaceFood(CellTypes[,] map, int[,] distanceMap, Tuple<int, int> exitCoords, int tolerance)
     {
         var width = distanceMap.GetLength(0);
         var height = distanceMap.GetLength(1);
@@ -80,21 +89,24 @@ internal class PerlinMapGenerator
         while (distanceMap[currentPoint.Item1, currentPoint.Item2] != 0)
         {
             var currentDistance = distanceMap[currentPoint.Item1, currentPoint.Item2];
-            path.Insert(0, currentPoint);
+            path.Add(currentPoint);
             var neighbors = GetNeighbours(currentPoint.Item1, currentPoint.Item2, width, height)
                 .Where(n => distanceMap[n.Item1, n.Item2] == currentDistance - 1).ToList();
 
             currentPoint = neighbors[_random.Next(neighbors.Count())];
         }
 
-        var pathStep = _random.Next(3) + 5;
+        path.Reverse();
+
+        var pathStep = _random.Next(5);
 
         while (pathStep < path.Count)
         {
-            if (map[path[pathStep].Item1, path[pathStep].Item2] == CellTypes.Floor)
-                map[path[pathStep].Item1, path[pathStep].Item2] = CellTypes.Food;
+            var food = _distances.ElementAt(_random.Next(_distances.Count));
 
-            pathStep += _random.Next(3) + 5;
+            map[path[pathStep].Item1, path[pathStep].Item2] = food.Key;
+
+            pathStep += _random.Next(tolerance) + (food.Value - tolerance);
         }
     }
 
@@ -192,6 +204,9 @@ internal class PerlinMapGenerator
                 maxDistance = Math.Max(maxDistance, distanceMap[i, j]);
             }
         }
+
+        if (maxDistance < Math.Min(width, height))
+            throw new Exception("Longest route is too short");
 
         var farPoints = new List<Tuple<int, int>>();
 
@@ -292,22 +307,18 @@ internal class PerlinMapGenerator
 }
 
 
-internal enum MapSide
-{
-    Left,
-    Right,
-    Top,
-    Bottom
-}
-
 public enum CellTypes
 {
     Unknown,
     Floor,
     Bush,
-    Food,
     Entry,
-    Exit
+    Exit,
+    InverterFood,
+    SlowerFood,
+    FasterFood,
+    InvisibleFood,
+    EnlargerFood
 }
 
 public static class PerlinNoiseGenerator
