@@ -13,6 +13,12 @@ public class CollisionController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if (col.gameObject.CompareTag("Finish"))
+        {
+            EventManager.TriggerEvent("levelComplete", null);
+            return;
+        }
+
         col.gameObject.TryGetComponent<EatableItem>(out var item);
         if(item == null)
         {

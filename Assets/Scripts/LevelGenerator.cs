@@ -13,67 +13,64 @@ public class LevelGenerator : MonoBehaviour
     private int width = 15;
     [SerializeField]
     private int height = 10;
-
-    private TileTemplates _templates;
+    
+    public GameObject[] floorTiles;
+    public GameObject[] bushTiles;
+    public GameObject[] foodTiles;
+    public GameObject finishPrefab;
     private readonly System.Random _rand = new System.Random();
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _templates = GameObject.FindGameObjectWithTag("Tiles").GetComponent<TileTemplates>();
-
-        GenerateMap();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void GenerateMap()
+    public Vector2 EntryPosition { get; private set; }
+    public Vector2 ExitPosition { get; private set; }
+    
+    public void GenerateMap()
     {
         float gridW = width * tileSize;
         float gridH = height * tileSize;
         transform.position = new Vector2(-gridW / 2 + tileSize / 2, gridH / 2 - tileSize / 2);
-        _templates.transform.position = new Vector2(-gridW / 2 + tileSize / 2, gridH / 2 - tileSize / 2);
+        //_templates.transform.position = new Vector2(-gridW / 2 + tileSize / 2, gridH / 2 - tileSize / 2);
 
         var generator = new PerlinMapGenerator();
         var map = generator.GenerateMap(width, height, 0, 5, 3);
-
+        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Instantiate(_templates.floorTiles[_rand.Next(_templates.floorTiles.Length)],
+                Instantiate(floorTiles[_rand.Next(floorTiles.Length)],
                     new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
 
                 switch(map[i, j])
                 {
                     case CellTypes.Bush:
-                        Instantiate(_templates.bushTiles[_rand.Next(_templates.bushTiles.Length)],
+                        Instantiate(bushTiles[_rand.Next(bushTiles.Length)],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
                     case CellTypes.SlowerFood:
-                        Instantiate(_templates.foodTiles[0],
+                        Instantiate(foodTiles[0],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
                     case CellTypes.FasterFood:
-                        Instantiate(_templates.foodTiles[1],
+                        Instantiate(foodTiles[1],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
                     case CellTypes.EnlargerFood:
-                        Instantiate(_templates.foodTiles[2],
+                        Instantiate(foodTiles[2],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
                     case CellTypes.InverterFood:
-                        Instantiate(_templates.foodTiles[3],
+                        Instantiate(foodTiles[3],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
                     case CellTypes.InvisibleFood:
-                        Instantiate(_templates.foodTiles[4],
+                        Instantiate(foodTiles[4],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
+                        break;
+                    case CellTypes.Entry:
+                        EntryPosition = new Vector2(i * tileSize, j * -tileSize);
+                        break;
+                    case CellTypes.Exit:
+                        Instantiate(finishPrefab, new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
+                        ExitPosition = new Vector2(i * tileSize, j * -tileSize);
                         break;
                 }
             }

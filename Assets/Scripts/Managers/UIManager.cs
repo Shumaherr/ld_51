@@ -31,6 +31,13 @@ public class UIManager : MonoBehaviour
         EventManager.StartListening("effectRemoved", OnEffectRemoved);
     }
 
+    private void OnDisable()
+    {
+        EventManager.StopListening("satietyChanged", OnSatietyChanged);
+        EventManager.StopListening("gameOver", OnGameOver);
+        EventManager.StopListening("effectApplied", OnEffectApplied);
+        EventManager.StartListening("effectRemoved", OnEffectRemoved);
+    }
     private void OnEffectApplied(Dictionary<string, object> obj)
     {
         Buff buff = (Buff)obj["effect"];
@@ -44,13 +51,7 @@ public class UIManager : MonoBehaviour
         
     }
 
-    private void OnDisable()
-    {
-        EventManager.StopListening("satietyChanged", OnSatietyChanged);
-        EventManager.StopListening("gameOver", OnGameOver);
-        EventManager.StopListening("effectApplied", OnEffectApplied);
-        EventManager.StartListening("effectRemoved", OnEffectRemoved);
-    }
+    
 
     private void OnEffectRemoved(Dictionary<string, object> obj)
     {
