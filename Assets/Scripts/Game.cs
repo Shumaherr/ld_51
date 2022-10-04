@@ -1,6 +1,7 @@
 ﻿using System;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 
 public class Game : MonoBehaviour
@@ -9,7 +10,8 @@ public class Game : MonoBehaviour
     [SerializeField] private Transform levelBuilder;
     [SerializeField] private Vector2 playerSpawnPoint;
     [SerializeField] CinemachineVirtualCamera  vcam;
-    
+    [SerializeField] public Light2D GlobalLight;
+
     private LevelGenerator _levelGenerator;
     private Transform _player;
     

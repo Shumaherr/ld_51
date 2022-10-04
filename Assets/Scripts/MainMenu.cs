@@ -66,16 +66,16 @@ public class MainMenu : MonoBehaviour
 
     public void HowTo()
     {
-        SceneManager.LoadScene("HowTo");
+        SceneManager.LoadScene("4_HowTo");
     }
 
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("1_MainMenu");
     }
     
     public void Credits()
     {
-        SceneManager.LoadScene("Credits");
+        SceneManager.LoadScene("5_Credits");
     }
 }

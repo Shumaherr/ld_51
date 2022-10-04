@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,6 +62,8 @@ public class UIManager : MonoBehaviour
 
     private void OnGameOver(Dictionary<string, object> obj)
     {
+        _statusIcons.Clear();
+        _statusIcons.ToList().ForEach(pair => Destroy(pair.Value.gameObject));
         Debug.Log("Game Over"); //TODO show game over screen
     }
 

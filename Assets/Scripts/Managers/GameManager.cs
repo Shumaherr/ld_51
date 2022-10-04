@@ -22,6 +22,8 @@ public class GameManager : Singleton<GameManager>
 
     private Game _game;
 
+    public Game Game => _game;
+
     public int Lives
     {
         get => _lives;
@@ -65,12 +67,12 @@ public class GameManager : Singleton<GameManager>
     private void OnLevelCompleate(Dictionary<string, object> obj)
     {
         _level++;
-        fsm.ChangeState(States.Play);
+        StartCoroutine(Play_Enter());
     }
     
-    IEnumerator Play_Enter()
+     IEnumerator Play_Enter()
     {
-        SceneManager.LoadSceneAsync("2_Game");//Quick and dirty
+        SceneManager.LoadScene("2_Game");//Quick and dirty
         yield return new WaitForSeconds(0.5f);
         _game = FindObjectOfType<Game>();
     }

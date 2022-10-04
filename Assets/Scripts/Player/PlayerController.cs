@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,10 +13,15 @@ public class PlayerController : MonoBehaviour
     public int ControlInverter { get; set; } = 1;
     private Vector2 _movement;
     private Rigidbody2D _rb;
+
+    public Light2D Light { get; set; }
+
     // Start is called before the first frame update
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        Light = GetComponentInChildren<Light2D>();
+        Light.enabled = false;
     }
 
     // Update is called once per frame
