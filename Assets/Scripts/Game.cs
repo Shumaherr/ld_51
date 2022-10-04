@@ -36,7 +36,7 @@ public class Game : MonoBehaviour
     {
         if(_player!=null)
             Destroy(_player.gameObject);
-        _player = Instantiate(playerPrefab, playerSpawnPoint, Quaternion.identity).transform;
+        _player = Instantiate(playerPrefab, playerSpawnPoint, playerPrefab.transform.rotation).transform;
         vcam.Follow = _player;
     }
 }

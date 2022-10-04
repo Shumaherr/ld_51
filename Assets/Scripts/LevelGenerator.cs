@@ -45,11 +45,11 @@ public class LevelGenerator : MonoBehaviour
                         Instantiate(bushTiles[_rand.Next(bushTiles.Length)],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
-                    case CellTypes.SlowerFood:
+                    case CellTypes.FasterFood:
                         Instantiate(foodTiles[0],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;
-                    case CellTypes.FasterFood:
+                    case CellTypes.SlowerFood:
                         Instantiate(foodTiles[1],
                             new Vector2(i * tileSize, j * -tileSize), Quaternion.identity);
                         break;

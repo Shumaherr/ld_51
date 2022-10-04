@@ -603,7 +603,7 @@ PrefabInstance:
     - target: {fileID: 4813735799566207829, guid: c7a7c7484b3136c4e94d7f784344ddae, type: 3}
       propertyPath: foodTiles.Array.data[2]
       value: 
-      objectReference: {fileID: 5116890765170846589, guid: 791ce5548069c2c4dadb385856e32887, type: 3}
+      objectReference: {fileID: 6305044631277364212, guid: d97aa19b3f5784f4280baf68c6a9f400, type: 3}
     - target: {fileID: 4813735799566207829, guid: c7a7c7484b3136c4e94d7f784344ddae, type: 3}
       propertyPath: foodTiles.Array.data[3]
       value: 
