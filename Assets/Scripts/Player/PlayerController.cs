@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public int ControlInverter { get; set; } = 1;
     private Vector2 _movement;
     private Rigidbody2D _rb;
+    private Animator _anim;
+    private static readonly int IsMoving = Animator.StringToHash("isMoving");
 
     public Light2D Light { get; set; }
 
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         Light = GetComponentInChildren<Light2D>();
+        _anim = GetComponentInChildren<Animator>();
         Light.enabled = false;
     }
 
@@ -38,6 +41,12 @@ public class PlayerController : MonoBehaviour
     
     public void Movement()
     {
+        if (_movement == Vector2.zero)
+        {
+            _anim.SetBool(IsMoving, false);
+            return;
+        }
+        _anim.SetBool(IsMoving, true);
         Vector2 currentPos = _rb.position;
         Vector2 adjustedMovement = _movement * (movementSpeed * SpeedMultiplier);
         Vector2 newPos = currentPos + adjustedMovement * Time.fixedDeltaTime;

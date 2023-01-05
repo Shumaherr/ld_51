@@ -37,13 +37,30 @@ public class GameManager : Singleton<GameManager>
             {
                 _lives = value;
             }
+            EventManager.TriggerEvent("livesChanged", new Dictionary<string, object>{{"lives", _lives}});
+        }
+    }
+
+    public int Level
+    {
+        get => _level;
+        set
+        {
+            _level = value;
+            EventManager.TriggerEvent("levelChanged", new Dictionary<string, object>{{"level", _level}});
         }
     }
 
     public void Awake()
     {
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            var go = Instantiate(new GameObject("Managers"));
+            go.AddComponent<EventManager>();
+        }
         fsm = new StateMachine<States>(this);
         fsm.ChangeState(States.MainMenu);
+        Level = 1;
     }
     
     private void OnEnable()
@@ -66,12 +83,13 @@ public class GameManager : Singleton<GameManager>
 
     private void OnLevelCompleate(Dictionary<string, object> obj)
     {
-        _level++;
+        Level++;
         StartCoroutine(Play_Enter());
     }
     
      IEnumerator Play_Enter()
     {
+        Debug.Log("Play_Enter");
         SceneManager.LoadScene("2_Game");//Quick and dirty
         yield return new WaitForSeconds(0.5f);
         _game = FindObjectOfType<Game>();

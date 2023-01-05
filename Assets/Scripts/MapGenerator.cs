@@ -271,7 +271,7 @@ internal class PerlinMapGenerator
         for (var octave = 0; octave < octaves; octave++)
         {
             // parallel loop - easy and fast.
-            Parallel.For(0
+            /*Parallel.For(0
                 , width * height
                 , (offset) =>
                 {
@@ -283,8 +283,18 @@ internal class PerlinMapGenerator
                     min = Math.Min(min, noise);
                     max = Math.Max(max, noise);
 
+                }            );*/ //To single thread loop
+                for(int i = 0; i < width * height; i++)
+                {
+                    var x = i % width;
+                    var y = i / width;
+                    var noise = PerlinNoiseGenerator.Noise(x * frequency * 1f / width, y * frequency * 1f / height);
+                    noise = data[y * width + x] += noise * amplitude;
+
+                    min = Math.Min(min, noise);
+                    max = Math.Max(max, noise);
                 }
-            );
+
 
             frequency *= 2;
             amplitude /= 2;

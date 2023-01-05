@@ -27,7 +27,7 @@ public class SatietyController : MonoBehaviour
 
     [SerializeField] private int _maxSatiety;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         Satiety = _maxSatiety;
         _isActive = true;

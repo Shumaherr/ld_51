@@ -21,4 +21,13 @@ public class EffectsController : MonoBehaviour
         effects.Remove(e);
         EventManager.TriggerEvent("effectRemoved", new Dictionary<string, object>{{"effect", e}});
     }
+
+    public void RemoveAllEffects()
+    {
+            foreach (Buff e in effects)
+        {
+            e.RemoveEffect(gameObject);
+        }
+        effects.Clear();
+    }
 }

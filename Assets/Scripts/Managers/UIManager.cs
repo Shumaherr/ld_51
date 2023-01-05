@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class UIManager : MonoBehaviour
 {
     private SatietyBar _satietyBar;
     [SerializeField] private GameObject _statusPanel;
+    [SerializeField] private TextMeshProUGUI lvlText;
+    [SerializeField] private TextMeshProUGUI livesText;
     private Dictionary<Buff, Transform> _statusIcons;
     Canvas _canvas;
     // Start is called before the first frame update
@@ -16,6 +19,8 @@ public class UIManager : MonoBehaviour
         _satietyBar = GetComponentInChildren<SatietyBar>();
         _canvas = GetComponent<Canvas>();
         _statusIcons = new Dictionary<Buff, Transform>();
+        livesText.text = "X" + GameManager.Instance.Lives;
+        lvlText.text = "Lvl " + GameManager.Instance.Level;
     }
 
     // Update is called once per frame
@@ -30,7 +35,11 @@ public class UIManager : MonoBehaviour
         EventManager.StartListening("gameOver", OnGameOver);
         EventManager.StartListening("effectApplied", OnEffectApplied);
         EventManager.StartListening("effectRemoved", OnEffectRemoved);
+        EventManager.StartListening("levelChanged", OnLevelChanged);
+        EventManager.StartListening("livesChanged", OnLivesChanged);
     }
+
+   
 
     private void OnDisable()
     {
@@ -38,7 +47,19 @@ public class UIManager : MonoBehaviour
         EventManager.StopListening("gameOver", OnGameOver);
         EventManager.StopListening("effectApplied", OnEffectApplied);
         EventManager.StartListening("effectRemoved", OnEffectRemoved);
+        EventManager.StopListening("levelChanged", OnLevelChanged);
+        EventManager.StopListening("livesChanged", OnLivesChanged);
     }
+
+    private void OnLevelChanged(Dictionary<string, object> obj)
+    {
+        lvlText.text = "Lvl: " + obj["level"];
+    }
+    private void OnLivesChanged(Dictionary<string, object> obj)
+    {
+        livesText.text = "X" + obj["lives"];
+    }
+
     private void OnEffectApplied(Dictionary<string, object> obj)
     {
         Buff buff = (Buff)obj["effect"];
@@ -64,7 +85,6 @@ public class UIManager : MonoBehaviour
     {
         _statusIcons.Clear();
         _statusIcons.ToList().ForEach(pair => Destroy(pair.Value.gameObject));
-        Debug.Log("Game Over"); //TODO show game over screen
     }
 
     private void OnSatietyChanged(Dictionary<string, object> obj)
