@@ -1,33 +1,57 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EffectsController : MonoBehaviour
 {
-    private List<Buff> effects = new List<Buff>();
-    public void ApplyEffect(Buff effect)
+    private HashSet<Buff> activeEffects = new HashSet<Buff>();
+    private Dictionary<Type, float> effectsToRemove = new Dictionary<Type, float>();
+
+    private void Awake()
     {
-        effects.Add(effect);
-        effect.ApplyEffect(gameObject);
-        EventManager.TriggerEvent("effectApplied", new Dictionary<string, object>{{"effect", effect}});
-        //Coroutine to remove effect after duration
-        StartCoroutine(RemoveEffect(effect.EffectData.duration, effect));
+        InvokeRepeating("Tick", 0.0f, 1.0f);
     }
 
-    private IEnumerator RemoveEffect(float duration, Buff e)
+    public void ApplyEffect(Buff effect)
     {
-        yield return new WaitForSeconds(duration);
-        e.RemoveEffect(gameObject);
-        effects.Remove(e);
-        EventManager.TriggerEvent("effectRemoved", new Dictionary<string, object>{{"effect", e}});
+        if (effectsToRemove.ContainsKey(effect.GetType()))
+        {
+            effectsToRemove[effect.GetType()] += effect.EffectData.duration;
+            return;
+        }
+
+        effect.ApplyEffect(gameObject);
+        activeEffects.Add(effect);
+        effectsToRemove.Add(effect.GetType(), Time.time + effect.EffectData.duration);
+        EventManager.TriggerEvent("effectApplied", new Dictionary<string, object> { { "effect", effect } });
+    }
+
+    private void Tick()
+    {
+        foreach (var effectPair in effectsToRemove)
+        {
+            if (effectPair.Value <= Time.time)
+            {
+                RemoveEffect(effectPair.Key);
+                
+            }
+        }
+    }
+
+    private void RemoveEffect(Type effectType)
+    {
+        activeEffects.First(buff => buff.GetType() == effectType).RemoveEffect(gameObject);
+        effectsToRemove.Remove(effectType);
+        EventManager.TriggerEvent("effectRemoved", new Dictionary<string, object> { { "effect", activeEffects.First(buff => buff.GetType() == effectType) } });
+        activeEffects.RemoveWhere(buff => buff.GetType() == effectType);
     }
 
     public void RemoveAllEffects()
     {
-            foreach (Buff e in effects)
-        {
-            e.RemoveEffect(gameObject);
-        }
-        effects.Clear();
+        effectsToRemove.Clear();
+        activeEffects.ToList().ForEach(buff => buff.RemoveEffect(gameObject));
+        activeEffects.Clear();
     }
 }

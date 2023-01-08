@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float movementSpeed;
     public float SpeedMultiplier { get; set; } = 1f;
+    public const float DefaultSpeedMultiplier = 1f;
     public int ControlInverter { get; set; } = 1;
     private Vector2 _movement;
     private Rigidbody2D _rb;

@@ -14,7 +14,7 @@ public class SpeedUpBuff : Buff
     public override void ApplyEffect(GameObject gameObject)
     {
         IsActive = true;
-        _defaultSpeedMultiplier = gameObject.GetComponent<PlayerController>().SpeedMultiplier;
+        _defaultSpeedMultiplier = PlayerController.DefaultSpeedMultiplier;
         gameObject.GetComponent<PlayerController>().SpeedMultiplier = EffectData.value;
     }
 

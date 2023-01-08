@@ -6,7 +6,7 @@ public abstract class Buff
 {
     public EffectData EffectData;
     private bool _isActive;
-    
+
     public bool IsActive
     {
         get => _isActive;
@@ -15,6 +15,8 @@ public abstract class Buff
             _isActive = value;
         }
     }
+
+
 
 
     public abstract void ApplyEffect(GameObject gameObject);
