@@ -27,11 +27,11 @@ internal class PerlinMapGenerator
         var retries = 0;
         var generated = false;
 
-        while (!generated && retries < 10)
+        while (!generated && retries < 20)
         {
             try
             {
-                var noiseMap = GenerateNoiseMap(width, height, 10);
+                var noiseMap = GenerateNoiseMap(width, height, 20);
 
                 for (int i = 0; i < width; i++)
                 {
@@ -265,7 +265,7 @@ internal class PerlinMapGenerator
         // maintaining the same overall pattern.
         PerlinNoiseGenerator.Reseed();
 
-        var frequency = 2f;
+        var frequency = 10f;
         var amplitude = 1f;
 
         for (var octave = 0; octave < octaves; octave++)
@@ -353,9 +353,7 @@ public static class PerlinNoiseGenerator
         {
             var source = _random.Next(p.Length);
 
-            var t = p[i];
-            p[i] = p[source];
-            p[source] = t;
+            (p[i], p[source]) = (p[source], p[i]);
         }
     }
 

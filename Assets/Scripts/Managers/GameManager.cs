@@ -10,12 +10,13 @@ public enum States
     Play,
     GameOver
 }
+
 public class GameManager : Singleton<GameManager>
 {
     public StateMachine<States> Fsm => fsm;
 
     StateMachine<States> fsm;
-    
+
     private int _level = 1;
     private int _score = 0;
     private int _lives = 3;
@@ -29,7 +30,7 @@ public class GameManager : Singleton<GameManager>
         get => _lives;
         set
         {
-            if(value == 0)
+            if (value == 0)
             {
                 fsm.ChangeState(States.GameOver);
             }
@@ -37,7 +38,8 @@ public class GameManager : Singleton<GameManager>
             {
                 _lives = value;
             }
-            EventManager.TriggerEvent("livesChanged", new Dictionary<string, object>{{"lives", _lives}});
+
+            EventManager.TriggerEvent("livesChanged", new Dictionary<string, object> { { "lives", _lives } });
         }
     }
 
@@ -47,7 +49,7 @@ public class GameManager : Singleton<GameManager>
         set
         {
             _level = value;
-            EventManager.TriggerEvent("levelChanged", new Dictionary<string, object>{{"level", _level}});
+            EventManager.TriggerEvent("levelChanged", new Dictionary<string, object> { { "level", _level } });
         }
     }
 
@@ -58,11 +60,12 @@ public class GameManager : Singleton<GameManager>
             var go = Instantiate(new GameObject("Managers"));
             go.AddComponent<EventManager>();
         }
+
         fsm = new StateMachine<States>(this);
         fsm.ChangeState(States.MainMenu);
         Level = 1;
     }
-    
+
     private void OnEnable()
     {
         EventManager.StartListening("levelComplete", OnLevelCompleate);
@@ -86,15 +89,15 @@ public class GameManager : Singleton<GameManager>
         Level++;
         StartCoroutine(Play_Enter());
     }
-    
-     IEnumerator Play_Enter()
+
+    IEnumerator Play_Enter()
     {
         Debug.Log("Play_Enter");
-        SceneManager.LoadScene("2_Game");//Quick and dirty
+        SceneManager.LoadScene("2_Game"); //Quick and dirty
         yield return new WaitForSeconds(0.5f);
         _game = FindObjectOfType<Game>();
     }
-    
+
     void GameOver_Enter()
     {
         SceneManager.LoadScene("3_GameOver");

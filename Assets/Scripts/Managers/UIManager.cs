@@ -79,6 +79,7 @@ public class UIManager : MonoBehaviour
     {
         Buff buff = (Buff)obj["effect"];
         Destroy(_statusIcons[buff].gameObject);
+        _statusIcons.Remove(buff);
     }
 
     private void OnGameOver(Dictionary<string, object> obj)
