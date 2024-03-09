@@ -13,7 +13,7 @@ public class Game : MonoBehaviour
     [SerializeField] public Light2D GlobalLight;
 
     private LevelGenerator _levelGenerator;
-    private Transform _player;
+    public Transform Player { get; private set; }
     private EdgeCollider2D _levelBounds;
     
     
@@ -34,15 +34,25 @@ public class Game : MonoBehaviour
 
     public void RestartLevel()
     {
+        if (Player.TryGetComponent(out EffectsController effectsController))
+        {
+            effectsController.RemoveAllEffects();
+        }
         InitScene();
     }
 
     private void InitScene()
     {
-        if(_player!=null)
-            Destroy(_player.gameObject);
-        _player = Instantiate(playerPrefab, playerSpawnPoint, playerPrefab.transform.rotation).transform;
+        if(Player != null)
+            Destroy(Player.gameObject);
+        Player = Instantiate(playerPrefab, playerSpawnPoint, playerPrefab.transform.rotation).transform;
         Debug.Log("Player Spawned");
-        vcam.Follow = _player;
+        vcam.Follow = Player;
+    }
+    
+    public void SetPlayer(Transform player)
+    {
+        Player = player;
+        vcam.Follow = Player;
     }
 }

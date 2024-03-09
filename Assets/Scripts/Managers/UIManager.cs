@@ -78,6 +78,8 @@ public class UIManager : MonoBehaviour
     private void OnEffectRemoved(Dictionary<string, object> obj)
     {
         Buff buff = (Buff)obj["effect"];
+        if(!_statusIcons.ContainsKey(buff))
+            return;
         Destroy(_statusIcons[buff].gameObject);
         _statusIcons.Remove(buff);
     }

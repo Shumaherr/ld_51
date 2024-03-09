@@ -35,7 +35,6 @@ public class EffectsController : MonoBehaviour
             if (effectPair.Value <= Time.time)
             {
                 RemoveEffect(effectPair.Key);
-                
             }
         }
     }
@@ -44,14 +43,24 @@ public class EffectsController : MonoBehaviour
     {
         activeEffects.First(buff => buff.GetType() == effectType).RemoveEffect(gameObject);
         effectsToRemove.Remove(effectType);
-        EventManager.TriggerEvent("effectRemoved", new Dictionary<string, object> { { "effect", activeEffects.First(buff => buff.GetType() == effectType) } });
+        EventManager.TriggerEvent("effectRemoved",
+            new Dictionary<string, object> { { "effect", activeEffects.First(buff => buff.GetType() == effectType) } });
         activeEffects.RemoveWhere(buff => buff.GetType() == effectType);
     }
 
     public void RemoveAllEffects()
     {
-        effectsToRemove.Clear();
-        activeEffects.ToList().ForEach(buff => buff.RemoveEffect(gameObject));
+        foreach (var effect in activeEffects)
+        {
+            effect.RemoveEffect(gameObject);
+        }
+
+        foreach (var effectToRemove in effectsToRemove.Keys)
+        {
+            EventManager.TriggerEvent("effectRemoved",
+                new Dictionary<string, object> { { "effect", activeEffects.First(buff => buff.GetType() == effectToRemove) } });
+        }
         activeEffects.Clear();
+        effectsToRemove.Clear();
     }
 }
