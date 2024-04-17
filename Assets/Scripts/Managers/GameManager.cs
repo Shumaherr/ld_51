@@ -63,12 +63,12 @@ public class GameManager : Singleton<GameManager>
 
         fsm = new StateMachine<States>(this);
         fsm.ChangeState(States.MainMenu);
-        Level = 1;
+        InitGame();
     }
 
     private void OnEnable()
     {
-        EventManager.StartListening("levelComplete", OnLevelCompleate);
+        EventManager.StartListening("levelComplete", OnLevelComplete);
         EventManager.StartListening("gameOver", OnGameOver);
     }
 
@@ -80,11 +80,11 @@ public class GameManager : Singleton<GameManager>
 
     private void OnDisable()
     {
-        EventManager.StopListening("levelComplete", OnLevelCompleate);
+        EventManager.StopListening("levelComplete", OnLevelComplete);
         EventManager.StopListening("gameOver", OnGameOver);
     }
 
-    private void OnLevelCompleate(Dictionary<string, object> obj)
+    private void OnLevelComplete(Dictionary<string, object> obj)
     {
         Level++;
         StartCoroutine(Play_Enter());
@@ -96,6 +96,12 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("2_Game"); //Quick and dirty
         yield return new WaitForSeconds(0.5f);
         _game = FindObjectOfType<Game>();
+    }
+
+    private void InitGame()
+    {
+        Lives = 3;
+        Level = 1;
     }
 
     void GameOver_Enter()

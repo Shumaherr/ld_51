@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEditor.Animations;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ViewController : MonoBehaviour
 {
     [SerializeField] private Sprite normalView;
     [SerializeField] private Sprite fatView;
-    [SerializeField] private AnimatorController normalAnimator;
-    [SerializeField] private AnimatorController fatAnimator;
+    [SerializeField] private RuntimeAnimatorController normalAnimator;
+    [SerializeField] private RuntimeAnimatorController fatAnimator;
     
     private SpriteRenderer _spriteRenderer;
     private Animator _animatorComponent;
