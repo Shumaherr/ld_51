@@ -9,16 +9,14 @@ public class Game : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform levelBuilder;
     [SerializeField] private Vector2 playerSpawnPoint;
-    [SerializeField] CinemachineVirtualCamera  vcam;
+    [SerializeField] CinemachineVirtualCamera vcam;
     [SerializeField] public Light2D GlobalLight;
 
     private LevelGenerator _levelGenerator;
     public Transform Player { get; private set; }
     private EdgeCollider2D _levelBounds;
-    
-    
-    
-    
+
+
     private void Awake()
     {
         Debug.Log("Game Awake");
@@ -38,18 +36,19 @@ public class Game : MonoBehaviour
         {
             effectsController.RemoveAllEffects();
         }
+
         InitScene();
     }
 
-    private void InitScene()
+    public void InitScene()
     {
-        if(Player != null)
+        if (Player != null)
             Destroy(Player.gameObject);
         Player = Instantiate(playerPrefab, playerSpawnPoint, playerPrefab.transform.rotation).transform;
         Debug.Log("Player Spawned");
         vcam.Follow = Player;
     }
-    
+
     public void SetPlayer(Transform player)
     {
         Player = player;

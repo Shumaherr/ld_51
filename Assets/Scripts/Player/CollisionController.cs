@@ -7,8 +7,9 @@ public class CollisionController : MonoBehaviour
 {
     [SerializeField] private CapsuleCollider2D normalCollider;
     [SerializeField] private EdgeCollider2D fatCollider;
-    
+
     EffectsController _effectsManager;
+
     private void Awake()
     {
         _effectsManager = gameObject.GetComponent<EffectsController>();
@@ -23,21 +24,22 @@ public class CollisionController : MonoBehaviour
         }
 
         col.gameObject.TryGetComponent<EatableItem>(out var item);
-        if(item == null)
+        if (item == null)
         {
             return;
         }
+
         gameObject.GetComponent<SatietyController>().Satiety += item.Satiety;
-        item.Buffs.ForEach((buff =>  _effectsManager.ApplyEffect(buff)));
+        item.Buffs.ForEach((buff => _effectsManager.ApplyEffect(buff)));
         Destroy(col.gameObject);
     }
-    
+
     public void ChangeToFatCollider()
     {
         normalCollider.enabled = false;
         fatCollider.enabled = true;
     }
-    
+
     public void ChangeToNormalCollider()
     {
         normalCollider.enabled = true;

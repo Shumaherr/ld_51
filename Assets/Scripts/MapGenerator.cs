@@ -284,16 +284,16 @@ internal class PerlinMapGenerator
                     max = Math.Max(max, noise);
 
                 }            );*/ //To single thread loop
-                for(int i = 0; i < width * height; i++)
-                {
-                    var x = i % width;
-                    var y = i / width;
-                    var noise = PerlinNoiseGenerator.Noise(x * frequency * 1f / width, y * frequency * 1f / height);
-                    noise = data[y * width + x] += noise * amplitude;
+            for (int i = 0; i < width * height; i++)
+            {
+                var x = i % width;
+                var y = i / width;
+                var noise = PerlinNoiseGenerator.Noise(x * frequency * 1f / width, y * frequency * 1f / height);
+                noise = data[y * width + x] += noise * amplitude;
 
-                    min = Math.Min(min, noise);
-                    max = Math.Max(max, noise);
-                }
+                min = Math.Min(min, noise);
+                max = Math.Max(max, noise);
+            }
 
 
             frequency *= 2;
@@ -376,14 +376,12 @@ public static class PerlinNoiseGenerator
             do
             {
                 gradient = new Vector2((float)(_random.NextDouble() * 2 - 1), (float)(_random.NextDouble() * 2 - 1));
-            }
-            while (gradient.LengthSquared() >= 1);
+            } while (gradient.LengthSquared() >= 1);
 
             gradient = Vector2.Normalize(gradient);
 
             grad[i] = gradient;
         }
-
     }
 
     private static float Drop(float t)

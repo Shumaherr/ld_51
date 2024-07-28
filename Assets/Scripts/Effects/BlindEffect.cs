@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BlindEffect : Buff
 {
+    public BlindEffect()
+    {
+        EffectData = Resources.Load("BlindEffect.asset") as EffectData;
+    }
+
     public override void ApplyEffect(GameObject gameObject)
     {
         IsActive = true;
@@ -13,7 +18,7 @@ public class BlindEffect : Buff
 
     public override void RemoveEffect(GameObject gameObject)
     {
-        if(!IsActive)
+        if (!IsActive)
             return;
         GameManager.Instance.Game.GlobalLight.intensity = 1;
         gameObject.GetComponent<PlayerController>().Light.enabled = false;

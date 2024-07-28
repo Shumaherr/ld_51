@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class BloatBuff : Buff
 {
+    public BloatBuff()
+    {
+        EffectData = Resources.Load("BloatEffect.asset") as EffectData;
+    }
 
     public override void ApplyEffect(GameObject gameObject)
     {
@@ -13,8 +17,6 @@ public class BloatBuff : Buff
         if (!gameObject.TryGetComponent(out EffectsApplier effectsApplier))
             return;
         effectsApplier.ApplyBloatEffect();
-        
-
     }
 
     public override void RemoveEffect(GameObject gameObject)

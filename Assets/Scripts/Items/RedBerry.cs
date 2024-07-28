@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class RedBerry : EatableItem
 {
-   public void Awake()
-   {
-      Buff buff = new SpeedUpBuff();
-      buff.EffectData = effectData;
-      Buffs.Add(buff);
-   }
+    public void Awake()
+    {
+        Buff buff = new SpeedUpBuff();
+        buff.EffectData = effectData;
+        Buffs.Add(buff);
+    }
 }

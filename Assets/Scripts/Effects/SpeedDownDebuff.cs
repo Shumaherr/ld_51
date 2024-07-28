@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedUpBuff : Buff
+public class SpeedDownBuff : Buff
 {
     private float _defaultSpeedMultiplier;
 
-    public SpeedUpBuff()
+    public SpeedDownBuff()
     {
-        EffectData = Resources.Load("SpeedUpItem.asset") as EffectData;
+        EffectData = Resources.Load("SpeedDown.asset") as EffectData;
     }
 
     public override void ApplyEffect(GameObject gameObject)

@@ -7703,7 +7703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4813735799566207829, guid: c7a7c7484b3136c4e94d7f784344ddae, type: 3}
       propertyPath: foodTiles.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4813735799566207829, guid: c7a7c7484b3136c4e94d7f784344ddae, type: 3}
       propertyPath: floorTiles.Array.size
@@ -7745,6 +7745,10 @@ PrefabInstance:
       propertyPath: foodTiles.Array.data[4]
       value: 
       objectReference: {fileID: 6305044631277364212, guid: 5a7220e19ee505141be7cf1a085d81ee, type: 3}
+    - target: {fileID: 4813735799566207829, guid: c7a7c7484b3136c4e94d7f784344ddae, type: 3}
+      propertyPath: foodTiles.Array.data[5]
+      value: 
+      objectReference: {fileID: 6305044631277364212, guid: d211970cdb92ed8449f0ca5e1f87a691, type: 3}
     - target: {fileID: 4813735799566207829, guid: c7a7c7484b3136c4e94d7f784344ddae, type: 3}
       propertyPath: floorTiles.Array.data[0]
       value: 

@@ -6,9 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    
-    [SerializeField]
-    private float movementSpeed;
+    [SerializeField] private float movementSpeed;
     public float SpeedMultiplier { get; set; } = 1f;
     public const float DefaultSpeedMultiplier = 1f;
     public int ControlInverter { get; set; } = 1;
@@ -34,12 +32,12 @@ public class PlayerController : MonoBehaviour
         Movement();
         RotateTowardDirection();
     }
-    
+
     void OnMove(InputValue value)
     {
         _movement = value.Get<Vector2>() * ControlInverter;
     }
-    
+
     public void Movement()
     {
         if (_movement == Vector2.zero)
@@ -47,19 +45,19 @@ public class PlayerController : MonoBehaviour
             _anim.SetBool(IsMoving, false);
             return;
         }
+
         _anim.SetBool(IsMoving, true);
         Vector2 currentPos = _rb.position;
         Vector2 adjustedMovement = _movement * (movementSpeed * SpeedMultiplier);
         Vector2 newPos = currentPos + adjustedMovement * Time.fixedDeltaTime;
         _rb.MovePosition(newPos);
     }
-    
+
     public void RotateTowardDirection()
     {
-        if(_movement != Vector2.zero)
+        if (_movement != Vector2.zero)
         {
-            transform.rotation = Quaternion.LookRotation(Vector3.back,_movement);
+            transform.rotation = Quaternion.LookRotation(Vector3.back, _movement);
         }
     }
-    
 }

@@ -10,7 +10,6 @@ public class EffectData : ScriptableObject
     public string effectName;
     public float duration;
     public float value;
-    
-    public Sprite icon;
 
+    public Sprite icon;
 }

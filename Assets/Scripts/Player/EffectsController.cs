@@ -30,12 +30,19 @@ public class EffectsController : MonoBehaviour
 
     private void Tick()
     {
+        List<Type> keysToRemove = new List<Type>();
+
         foreach (var effectPair in effectsToRemove)
         {
             if (effectPair.Value <= Time.time)
             {
-                RemoveEffect(effectPair.Key);
+                keysToRemove.Add(effectPair.Key);
             }
+        }
+
+        foreach (var key in keysToRemove)
+        {
+            RemoveEffect(key);
         }
     }
 
@@ -58,8 +65,10 @@ public class EffectsController : MonoBehaviour
         foreach (var effectToRemove in effectsToRemove.Keys)
         {
             EventManager.TriggerEvent("effectRemoved",
-                new Dictionary<string, object> { { "effect", activeEffects.First(buff => buff.GetType() == effectToRemove) } });
+                new Dictionary<string, object>
+                    { { "effect", activeEffects.First(buff => buff.GetType() == effectToRemove) } });
         }
+
         activeEffects.Clear();
         effectsToRemove.Clear();
     }

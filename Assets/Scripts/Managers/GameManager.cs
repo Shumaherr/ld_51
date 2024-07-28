@@ -55,12 +55,6 @@ public class GameManager : Singleton<GameManager>
 
     public void Awake()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            var go = Instantiate(new GameObject("Managers"));
-            go.AddComponent<EventManager>();
-        }
-
         fsm = new StateMachine<States>(this);
         fsm.ChangeState(States.MainMenu);
         InitGame();

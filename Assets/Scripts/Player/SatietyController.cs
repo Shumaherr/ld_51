@@ -6,6 +6,7 @@ public class SatietyController : MonoBehaviour
 {
     private int _satiety;
     private bool _isActive;
+
     public int Satiety
     {
         get => _satiety;
@@ -20,12 +21,14 @@ public class SatietyController : MonoBehaviour
 
             if (value > _maxSatiety)
                 value = _maxSatiety;
-            EventManager.TriggerEvent("satietyChanged", new Dictionary<string, object>{ { "satiety", (float) value / _maxSatiety }});
+            EventManager.TriggerEvent("satietyChanged",
+                new Dictionary<string, object> { { "satiety", (float)value / _maxSatiety } });
             _satiety = value;
         }
     }
 
     [SerializeField] private int _maxSatiety;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +45,5 @@ public class SatietyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class InvertControllsEffect : Buff
 {
-
+    public InvertControllsEffect()
+    {
+        EffectData = Resources.Load("InvertEffect.asset") as EffectData;
+    }
 
     public override void ApplyEffect(GameObject gameObject)
     {
@@ -14,7 +17,7 @@ public class InvertControllsEffect : Buff
 
     public override void RemoveEffect(GameObject gameObject)
     {
-        if(!IsActive)
+        if (!IsActive)
             return;
         gameObject.GetComponent<PlayerController>().ControlInverter = 1;
         IsActive = false;

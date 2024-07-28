@@ -12,7 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI lvlText;
     [SerializeField] private TextMeshProUGUI livesText;
     private Dictionary<Buff, Transform> _statusIcons;
+
     Canvas _canvas;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -26,9 +28,8 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
-    
+
     private void OnEnable()
     {
         EventManager.StartListening("satietyChanged", OnSatietyChanged);
@@ -39,7 +40,6 @@ public class UIManager : MonoBehaviour
         EventManager.StartListening("livesChanged", OnLivesChanged);
     }
 
-   
 
     private void OnDisable()
     {
@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
     {
         lvlText.text = "Lvl: " + obj["level"];
     }
+
     private void OnLivesChanged(Dictionary<string, object> obj)
     {
         livesText.text = "X" + obj["lives"];
@@ -67,18 +68,18 @@ public class UIManager : MonoBehaviour
         GameObject NewObj = new GameObject(); //Create the GameObject
         Image NewImage = NewObj.AddComponent<Image>(); //Add the Image Component script
         NewImage.sprite = icon; //Set the Sprite of the Image Component on the new GameObject
-        NewObj.GetComponent<RectTransform>().SetParent(_statusPanel.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+        NewObj.GetComponent<RectTransform>()
+            .SetParent(_statusPanel
+                .transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
         NewObj.SetActive(true); //Activate the GameObject
         _statusIcons.Add(buff, NewObj.transform);
-        
     }
 
-    
 
     private void OnEffectRemoved(Dictionary<string, object> obj)
     {
         Buff buff = (Buff)obj["effect"];
-        if(!_statusIcons.ContainsKey(buff))
+        if (!_statusIcons.ContainsKey(buff))
             return;
         Destroy(_statusIcons[buff].gameObject);
         _statusIcons.Remove(buff);
@@ -95,4 +96,3 @@ public class UIManager : MonoBehaviour
         _satietyBar.SetSatiety((float)obj["satiety"]);
     }
 }
-        

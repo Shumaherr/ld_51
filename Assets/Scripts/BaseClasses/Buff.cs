@@ -10,13 +10,8 @@ public abstract class Buff
     public bool IsActive
     {
         get => _isActive;
-        set
-        {
-            _isActive = value;
-        }
+        set { _isActive = value; }
     }
-
-
 
 
     public abstract void ApplyEffect(GameObject gameObject);

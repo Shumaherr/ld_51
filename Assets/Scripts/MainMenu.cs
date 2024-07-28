@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
-
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -40,8 +39,7 @@ public class MainMenu : MonoBehaviour
     {
         GameManager.Instance.Fsm.ChangeState(States.Play);
     }
-    
-    
+
 
     public void ExitGame()
     {
@@ -73,7 +71,7 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("1_MainMenu");
     }
-    
+
     public void Credits()
     {
         SceneManager.LoadScene("5_Credits");
