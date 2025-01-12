@@ -14,15 +14,17 @@ public class LevelGenerator : MonoBehaviour
     public Vector2 EntryPosition { get; private set; }
     public Vector2 ExitPosition { get; private set; }
 
-    public void GenerateMap()
+    public void GenerateMap(int level = 0)
     {
         float gridW = width * tileSize;
         float gridH = height * tileSize;
         //transform.position = new Vector2(-gridW / 2 + tileSize / 2, gridH / 2 - tileSize / 2);
         //_templates.transform.position = new Vector2(-gridW / 2 + tileSize / 2, gridH / 2 - tileSize / 2);
 
-        var generator = new PerlinMapGenerator();
-        var map = generator.GenerateMap(width, height, 0, 5, 3);
+        var generator = new MazeGenerator(width, height);
+        var map = generator.GenerateMap(0, 5, 15);
+        /*var generator = new PerlinMapGenerator();
+        var map = generator.GenerateMap(width, height, 0, 5, 3);*/
 
         for (int i = 0; i < width; i++)
         {

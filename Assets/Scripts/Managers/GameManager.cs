@@ -86,6 +86,10 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator Play_Enter()
     {
+        if (fsm.LastState != States.MainMenu)
+        {
+            InitGame();
+        }
         Debug.Log("Play_Enter");
         SceneManager.LoadScene("2_Game"); //Quick and dirty
         yield return new WaitForSeconds(0.5f);
@@ -94,8 +98,8 @@ public class GameManager : Singleton<GameManager>
 
     private void InitGame()
     {
-        Lives = 3;
-        Level = 1;
+        _lives = 3;
+        _level = 1;
     }
 
     void GameOver_Enter()
